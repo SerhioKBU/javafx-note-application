@@ -3,6 +3,7 @@ package com.javafx.exampl.service;
 import com.javafx.exampl.dao.DaoException;
 import com.javafx.exampl.dao.NoteDao;
 import com.javafx.exampl.entity.Note;
+import lombok.SneakyThrows;
 
 import java.util.List;
 
@@ -10,16 +11,19 @@ public class NoteService {
 
     private NoteDao noteDao = new NoteDao();
 
-    public Note create(Note note) throws ServiceException {
-        try {
-            return noteDao.create(note);
-        } catch (DaoException e) {
-            throw new ServiceException("failed to save");
-        }
+
+    @SneakyThrows
+    public Note create(Note note){
+        return noteDao.create(note);
     }
 
-    public List<Note> findAll() {
-        return null;
+    @SneakyThrows
+    public List<Note> findAll() throws ServiceException {
+        return noteDao.findAll();
     }
 
+    @SneakyThrows
+    public void delete(Note note) {
+        noteDao.delete(note);
+    }
 }

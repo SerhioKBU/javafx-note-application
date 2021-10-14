@@ -23,10 +23,14 @@ public class NotesController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        try {
+            noteList.getItems().addAll(noteService.findAll());
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void createNote() throws ServiceException {
+    public void createNote() {
         String noteDescriptionText = noteDescription.getText();
 
         Note note = new Note();
@@ -40,5 +44,7 @@ public class NotesController implements Initializable {
     public void deleteNote() {
         Note selectedItem = noteList.getSelectionModel().getSelectedItem();
         noteList.getItems().remove(selectedItem);
+        noteService.delete(selectedItem);
     }
+
 }
